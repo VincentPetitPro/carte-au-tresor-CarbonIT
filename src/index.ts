@@ -1,7 +1,7 @@
-import { readEntryFile, isEntryFileCorrectFormat } from "./entry_file_helpers";
+import { readEntryFile, parseEntryFile } from "./entry_file_helpers";
 
 const entryFile = readEntryFile("../entry.txt");
-const isCorrectFormat = isEntryFileCorrectFormat(entryFile);
+const fileObject = parseEntryFile(entryFile);
+const map = fileObject.map;
 
-console.log(entryFile);
-console.log(isCorrectFormat);
+console.log(map);
