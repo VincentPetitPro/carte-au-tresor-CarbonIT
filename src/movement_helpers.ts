@@ -1,33 +1,32 @@
 import Coords from "./coords";
+import Mountain from "./moutain";
 
 // Function to check if next case is in board
-export function isInBoard(advDir: string, advCoords: Coords, mapCoords: Coords): boolean {
-	let ans: boolean = false;
-
-	switch (advDir) {
-		case "N":
-			advCoords.y - 1 >= 0 ? (ans = true) : (ans = false);
-			break;
-		case "S":
-			advCoords.y + 1 <= mapCoords.y ? (ans = true) : (ans = false);
-			break;
-		case "W":
-			advCoords.x - 1 >= 0 ? (ans = true) : (ans = false);
-			break;
-		case "E":
-			advCoords.x + 1 <= mapCoords.x ? (ans = true) : (ans = false);
-			break;
+export function isInBoard(nextCase: Coords, mapCoords: Coords): boolean {
+	if (
+		nextCase.x >= 0 &&
+		nextCase.x <= mapCoords.x &&
+		nextCase.y >= 0 &&
+		nextCase.y <= mapCoords.y
+	) {
+		return true;
+	} else {
+		return false;
 	}
-
-	return ans;
 }
 
 // Function to check if next case is a mountain
+export function isMountain(nextCase: Coords, mountains: Mountain[]): boolean {
+	return mountains.some((m) => {
+		return JSON.stringify(m) === JSON.stringify(nextCase);
+	});
+}
 
 // Function to check if next case is an adventurers
+export function isAdventurer() {}
 
 // function to check if movement if legal
-// function isLegalMovement(advDir: string, advMov: string, advCoords: Coords): boolean {
+// function isLegalMovement(nextCase: Coords, mapCoords: Coords, adventurers: Adventurer[]): boolean {
 // 	switch (advDir) {
 // 	    case "N":
 //	        If next case is in board, not a mountain nor an adventurer
