@@ -1,8 +1,10 @@
 import Coords from "./coords";
 import { readEntryFile, parseEntryFile } from "./file_helpers";
-import { isInBoard, isMountain, isAdventurer, isLegalMovement } from "./movement_helpers";
+import { isLegalMovement } from "./movement_helpers";
 
-const entryFile = readEntryFile("../entry.txt");
+const directions = ["N", "E", "S", "W"];
+
+const entryFile = readEntryFile("./entry.txt");
 const fileObject = parseEntryFile(entryFile);
 
 const mapCoords = fileObject.map;
@@ -18,34 +20,48 @@ console.log(fileObject);
 // Main Loop
 for (let i = 0; i < nTurns; i++) {
 	let nextCase: Coords;
-	adventurers.forEach((adventurer) => {
+	for (let adventurer of adventurers) {
 		if (adventurer.moves.length > 0) {
-			nextCase = new Coords(adventurer.x, adventurer.y);
 			switch (adventurer.moves[0]) {
 				case "A":
-					switch (adventurer.dir) {
+					switch (adventurer.direction) {
 						case "N":
-							isLegalMovement(nextCase, mapCoords, adventurers);
+							nextCase = new Coords(adventurer.x, adventurer.y + 1);
+							if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
+								adventurer.y++;
+							}
 							break;
 						case "S":
+							nextCase = new Coords(adventurer.x, adventurer.y - 1);
+							if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
+								adventurer.y--;
+							}
 							break;
 						case "W":
+							nextCase = new Coords(adventurer.x - 1, adventurer.y);
+							if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
+								adventurer.x--;
+							}
 							break;
 						case "E":
+							nextCase = new Coords(adventurer.x + 1, adventurer.y);
+							if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
+								adventurer.x++;
+							}
 							break;
 					}
-
-					if (
-						isLegalMovement(adventurer.direction, adventurer.moves[0], {
-							x: adventurer.x,
-							y: adventurer.y,
-						})
-					) {
-						// move forward
-					}
+					// Check for treasures
+					break;
 				case "D":
+					adventurer.direction =
+						directions[(directions.indexOf(adventurer.direction) + 1) % 4];
+					break;
+
 				case "G":
+					adventurer.direction =
+						directions[(directions.indexOf(adventurer.direction) + 3) % 4];
+					break;
 			}
 		}
-	});
+	}
 }

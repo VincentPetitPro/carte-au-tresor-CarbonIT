@@ -31,13 +31,19 @@ export function isAdventurer(nextCase: Coords, adventurers: Adventurer[]): boole
 }
 
 // function to check if movement if legal
-// function isLegalMovement(nextCase: Coords, mapCoords: Coords, adventurers: Adventurer[]): boolean {
-// 	switch (advDir) {
-// 	    case "N":
-//	        If next case is in board, not a mountain nor an adventurer
-// 	        if () {
-// 	    case "S":;
-// 	    case "E":;
-// 	    case "W":;
-// 	return true;
-// }
+export function isLegalMovement(
+	nextCase: Coords,
+	mapCoords: Coords,
+	mountains: Mountain[],
+	adventurers: Adventurer[]
+): boolean {
+	if (
+		isInBoard(nextCase, mapCoords) &&
+		!isMountain(nextCase, mountains) &&
+		!isAdventurer(nextCase, adventurers)
+	) {
+		return true;
+	} else {
+		return false;
+	}
+}
