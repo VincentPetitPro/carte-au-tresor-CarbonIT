@@ -1,3 +1,4 @@
+import Adventurer from "./adventurer";
 import Coords from "./coords";
 import Mountain from "./moutain";
 
@@ -23,7 +24,11 @@ export function isMountain(nextCase: Coords, mountains: Mountain[]): boolean {
 }
 
 // Function to check if next case is an adventurers
-export function isAdventurer() {}
+export function isAdventurer(nextCase: Coords, adventurers: Adventurer[]): boolean {
+	return adventurers.some((a) => {
+		return JSON.stringify(new Coords(a.x, a.y)) === JSON.stringify(nextCase);
+	});
+}
 
 // function to check if movement if legal
 // function isLegalMovement(nextCase: Coords, mapCoords: Coords, adventurers: Adventurer[]): boolean {
