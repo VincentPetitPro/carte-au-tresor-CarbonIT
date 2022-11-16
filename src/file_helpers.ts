@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import Map from "./map";
+import Coords from "./coords";
 import Mountain from "./moutain";
 import Treasure from "./treasure";
 import Adventurer from "./adventurer";
@@ -21,7 +21,7 @@ export function readEntryFile(filePath: string): string {
 	1 to n adventurers each with 2 coords, a direction and a set of movements
 */
 export function parseEntryFile(entryFile: string): FileObject_DTO {
-	const mapCoords: Map[] = [];
+	const mapCoords: Coords[] = [];
 	const mountainsCoords: Mountain[] = [];
 	const treasuresCoords: Treasure[] = [];
 	const adventurers: Adventurer[] = [];
@@ -117,3 +117,5 @@ export function parseEntryFile(entryFile: string): FileObject_DTO {
 
 	return entryFileObject;
 }
+
+// TODO: Create function to write the output file

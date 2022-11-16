@@ -1,4 +1,4 @@
-export default class Map {
+export default class Coords {
 	x: number;
 	y: number;
 
