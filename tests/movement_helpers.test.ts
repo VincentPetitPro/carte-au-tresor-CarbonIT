@@ -1,15 +1,14 @@
 import { describe, expect, test } from "@jest/globals";
+import Adventurer from "../src/adventurer";
 import Coords from "../src/coords";
+import Mountain from "../src/moutain";
 import { isInBoard, isMountain, isAdventurer, isLegalMovement } from "../src/movement_helpers";
 
 const mapCoords = new Coords(3, 3);
-const mountains = [
-	{ x: 1, y: 0 },
-	{ x: 2, y: 1 },
-];
+const mountains = [new Mountain(1, 0), new Mountain(2, 1)];
 const adventurers = [
-	{ name: "Lara", x: 1, y: 1, direction: "S", moves: "AADADAGGA" },
-	{ name: "Indiana", x: 0, y: 3, direction: "E", moves: "AADAADADDA" },
+	new Adventurer("Lara", 1, 1, "S", "AADADAGGA", 0),
+	new Adventurer("Indiana", 0, 3, "E", "AADAADADDA", 0),
 ];
 
 describe("isInBoard", () => {

@@ -34,10 +34,7 @@ export function parseInputFile(inputFile: string): FileObject_DTO {
 		if (line.startsWith("C")) {
 			const elems = line.split(" - ");
 			if (elems.length === 3 && parseInt(elems[1]) >= 0 && parseInt(elems[2]) >= 0) {
-				mapCoords.push({
-					x: parseInt(elems[1]),
-					y: parseInt(elems[2]),
-				});
+				mapCoords.push(new Coords(parseInt(elems[1]), parseInt(elems[2])));
 			} else {
 				throw new Error("Input file is not in the correct format: C line is incorrect");
 			}
@@ -46,10 +43,7 @@ export function parseInputFile(inputFile: string): FileObject_DTO {
 		if (line.startsWith("M")) {
 			const elems = line.split(" - ");
 			if (elems.length == 3 && parseInt(elems[1]) >= 0 && parseInt(elems[2]) >= 0) {
-				mountainsCoords.push({
-					x: parseInt(elems[1]),
-					y: parseInt(elems[2]),
-				});
+				mountainsCoords.push(new Mountain(parseInt(elems[1]), parseInt(elems[2])));
 			} else {
 				throw new Error(
 					"Input file is not in the correct format: M line " + line + " is incorrect"
@@ -65,11 +59,9 @@ export function parseInputFile(inputFile: string): FileObject_DTO {
 				parseInt(elems[2]) >= 0 &&
 				parseInt(elems[3]) >= 0
 			) {
-				treasuresCoords.push({
-					x: parseInt(elems[1]),
-					y: parseInt(elems[2]),
-					nTreasures: parseInt(elems[3]),
-				});
+				treasuresCoords.push(
+					new Treasure(parseInt(elems[1]), parseInt(elems[2]), parseInt(elems[3]))
+				);
 			} else {
 				throw new Error(
 					"Input file is not in the correct format: T line " + line + " is incorrect"
@@ -86,13 +78,16 @@ export function parseInputFile(inputFile: string): FileObject_DTO {
 				["N", "S", "W", "E"].includes(elems[4]) &&
 				elems[5].length >= 0
 			) {
-				adventurers.push({
-					name: elems[1],
-					x: parseInt(elems[2]),
-					y: parseInt(elems[3]),
-					direction: elems[4],
-					moves: elems[5],
-				});
+				adventurers.push(
+					new Adventurer(
+						elems[1],
+						parseInt(elems[2]),
+						parseInt(elems[3]),
+						elems[4],
+						elems[5],
+						0
+					)
+				);
 			} else {
 				throw new Error(
 					"Input file is not in the correct format: A line " + line + " is incorrect"
@@ -121,35 +116,44 @@ export function parseInputFile(inputFile: string): FileObject_DTO {
 }
 
 /**
- * @param {FileObject_DTO} fileObject the object containing the map, mountains, treasures and adventurers.
- * @param {string} filePath path to the file to be written.
- * @description
- * Writes the output file after the adventurers have completed their moves.
- * In a real world application, I would use fs.writeFile instead of fs.writeFileSync to avoid blocking the event loop.
+ * @param {FileObject_DTO} outputFileObject the object containing the map, mountains, treasures and adventurers.
+ * @param {string} outputFilePath path to the file to be written.
+ * @description Writes the output file after the adventurers have completed their moves.
+In a real world application, I would use fs.writeFile instead of fs.writeFileSync to avoid blocking the event loop.
  */
-export function writeOutputFile(filePath: string, fileObject: FileObject_DTO): void {
+export function writeOutputFile(outputFilePath: string, outputFileObject: FileObject_DTO): void {
 	let CLine = "";
 	let MLines: string[] = [];
 	let TLines: string[] = [];
 	let ALines: string[] = [];
 
-	CLine = `C - ${fileObject.map.x} - ${fileObject.map.y}\r\n`;
+	CLine = `C - ${outputFileObject.map.x} - ${outputFileObject.map.y}\r\n`;
 
-	for (let mountain of fileObject.mountains) {
+	for (let mountain of outputFileObject.mountains) {
 		MLines.push(`M - ${mountain.x} - ${mountain.y}\r\n`);
 	}
 
-	for (let treasure of fileObject.treasures) {
+	for (let treasure of outputFileObject.treasures) {
 		TLines.push(`T - ${treasure.x} - ${treasure.y} - ${treasure.nTreasures}\r\n`);
 	}
 
-	for (let adventurer of fileObject.adventurers) {
+	for (let adventurer of outputFileObject.adventurers) {
 		ALines.push(
-			`A - ${adventurer.name} - ${adventurer.x} - ${adventurer.y} - ${adventurer.direction} - ${adventurer.moves}\r\n`
+			"A - " +
+				adventurer.name +
+				" - " +
+				adventurer.x +
+				" - " +
+				adventurer.y +
+				" - " +
+				adventurer.direction +
+				" - " +
+				adventurer.nTreasures +
+				"\r\n"
 		);
 	}
 
 	const output = CLine + MLines.join("") + TLines.join("") + ALines.join("").trimEnd();
 
-	fs.writeFileSync(filePath, output);
+	fs.writeFileSync(outputFilePath, output);
 }

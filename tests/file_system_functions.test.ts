@@ -13,7 +13,7 @@ const inputFileObj = new FileObject_DTO(
 		{ x: 0, y: 3, nTreasures: 2 },
 		{ x: 1, y: 3, nTreasures: 3 },
 	],
-	[{ name: "Lara", x: 1, y: 1, direction: "S", moves: "AADADAGGA" }]
+	[{ name: "Lara", x: 1, y: 1, direction: "S", moves: "AADADAGGA", nTreasures: 0 }]
 );
 
 const inputFileString = `C​ - 3 - 4·
@@ -48,7 +48,7 @@ describe("writing the map", () => {
 		const received = fs
 			.readFileSync("tests/test_output.txt", "utf8")
 			.replace(/[^a-zA-Z0-9]/g, "");
-		const expected = inputFileString;
+		const expected = "C34M10M21T032T133ALara11S0";
 		expect(received).toBe(expected);
 	});
 });
