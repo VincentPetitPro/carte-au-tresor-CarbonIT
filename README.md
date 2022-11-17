@@ -25,7 +25,7 @@ npm test
 
 ## Input map
 
-The map used by the application is named `input.txt` and is located at the root of the projetc. It follows the following schema.
+The map used by the application is named `input.txt` and is located at the root of the project. It follows the following schema:
 
 ```text
 C - x - y
@@ -50,3 +50,18 @@ T​ - 0 - 3 - 2
 T​ - 1 - 3 - 3
 A​ - Lara - 1 - 1 - S - AADADAGGA
 ```
+
+## Output map
+
+The output of the program is a map named `output.txt` and is located at the root of the project. It follows the following schema:
+
+```text
+C - 3 - 4
+M​ - 1 - 0
+M​ - 2 - 1
+T​ - 1 - 3 - 2
+A​ - Lara - 0 - 3 - S - 3
+```
+The schema is the same as for the `input.txt` map but with a few twists:
+  - If a T-line has no more treasures, it will not appear on the output.
+  - The moves of the A-lines have disapeared and instead, we have the number of treasures each adventurer has found.
