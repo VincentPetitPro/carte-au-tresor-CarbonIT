@@ -51,6 +51,7 @@ for (let i = 0; i < nTurns; i++) {
 							break;
 					}
 					// Check for treasures
+					// Should already have an output different from the input
 					break;
 				case "D":
 					adventurer.direction =

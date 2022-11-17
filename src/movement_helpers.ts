@@ -2,7 +2,11 @@ import Adventurer from "./adventurer";
 import Coords from "./coords";
 import Mountain from "./moutain";
 
-// Function to check if next case is in board
+/**
+ * @param nextCase the next case to be checked
+ * @param mapCoords the coordinates of the map
+ * @returns {boolean} true if the next case is inside the map, false otherwise
+ */
 export function isInBoard(nextCase: Coords, mapCoords: Coords): boolean {
 	if (
 		nextCase.x >= 0 &&
@@ -15,22 +19,35 @@ export function isInBoard(nextCase: Coords, mapCoords: Coords): boolean {
 		return false;
 	}
 }
-
-// Function to check if next case is a mountain
+/**
+ * @param {Coords} nextCase the next case to be checked
+ * @param {Mountain[]} mountains list of all mountains
+ * @returns {boolean} true if the next case is a mountain, false otherwise
+ */
 export function isMountain(nextCase: Coords, mountains: Mountain[]): boolean {
 	return mountains.some((m) => {
 		return JSON.stringify(m) === JSON.stringify(nextCase);
 	});
 }
 
-// Function to check if next case is an adventurers
+/**
+ * @param {Coords} nextCase the next case to be checked
+ * @param {Adventurer[]} adventurers list of all adventurers
+ * @returns {boolean} true if the next case is an adventurer, false otherwise
+ */
 export function isAdventurer(nextCase: Coords, adventurers: Adventurer[]): boolean {
 	return adventurers.some((a) => {
 		return JSON.stringify(new Coords(a.x, a.y)) === JSON.stringify(nextCase);
 	});
 }
 
-// function to check if movement if legal
+/**
+ * @param {Coords} nextCase the next case to be checked
+ * @param {Coords} mapCoords the coordinates of the map
+ * @param {Mountain[]} mountains list of all mountains
+ * @param {Adventurer[]} adventurers list of all adventurers
+ * @returns {boolean} true if the next move is a legal move, false otherwise
+ */
 export function isLegalMovement(
 	nextCase: Coords,
 	mapCoords: Coords,
