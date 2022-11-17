@@ -32,6 +32,17 @@ export function isMountain(nextCase: Coords, mountains: Mountain[]): boolean {
 
 /**
  * @param {Coords} nextCase the next case to be checked
+ * @param {Treasure[]} treasures list of all treasures
+ * @returns {boolean} true if the next case is a treasure, false otherwise
+ */
+export function isTreasure(nextCase: Coords, treasures: Coords[]): boolean {
+	return treasures.some((t) => {
+		return JSON.stringify(new Coords(t.x, t.y)) === JSON.stringify(nextCase);
+	});
+}
+
+/**
+ * @param {Coords} nextCase the next case to be checked
  * @param {Adventurer[]} adventurers list of all adventurers
  * @returns {boolean} true if the next case is an adventurer, false otherwise
  */

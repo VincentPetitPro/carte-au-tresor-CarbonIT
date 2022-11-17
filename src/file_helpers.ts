@@ -134,7 +134,9 @@ export function writeOutputFile(outputFilePath: string, outputFileObject: FileOb
 	}
 
 	for (let treasure of outputFileObject.treasures) {
-		TLines.push(`T - ${treasure.x} - ${treasure.y} - ${treasure.nTreasures}\r\n`);
+		if (treasure.nTreasures > 0) {
+			TLines.push(`T - ${treasure.x} - ${treasure.y} - ${treasure.nTreasures}\r\n`);
+		}
 	}
 
 	for (let adventurer of outputFileObject.adventurers) {

@@ -2,10 +2,18 @@ import { describe, expect, test } from "@jest/globals";
 import Adventurer from "../src/adventurer";
 import Coords from "../src/coords";
 import Mountain from "../src/moutain";
-import { isInBoard, isMountain, isAdventurer, isLegalMovement } from "../src/movement_helpers";
+import {
+	isInBoard,
+	isMountain,
+	isAdventurer,
+	isLegalMovement,
+	isTreasure,
+} from "../src/movement_helpers";
+import Treasure from "../src/treasure";
 
 const mapCoords = new Coords(3, 3);
 const mountains = [new Mountain(1, 0), new Mountain(2, 1)];
+const treasures = [new Treasure(0, 3, 2), new Treasure(1, 3, 3)];
 const adventurers = [
 	new Adventurer("Lara", 1, 1, "S", "AADADAGGA", 0),
 	new Adventurer("Indiana", 0, 3, "E", "AADAADADDA", 0),
@@ -28,6 +36,15 @@ describe("isMountain", () => {
 		expect(isMountain(new Coords(1, 0), mountains)).toBe(true);
 		expect(isMountain(new Coords(2, 1), mountains)).toBe(true);
 		expect(isMountain(new Coords(3, 3), mountains)).toBe(false);
+	});
+});
+
+describe("isTreasure", () => {
+	test("isTreasure returns true if next case is a treasure", () => {
+		expect(isTreasure(new Coords(0, 0), treasures)).toBe(false);
+		expect(isTreasure(new Coords(1, 3), treasures)).toBe(true);
+		expect(isTreasure(new Coords(2, 1), treasures)).toBe(false);
+		expect(isTreasure(new Coords(3, 3), treasures)).toBe(false);
 	});
 });
 
