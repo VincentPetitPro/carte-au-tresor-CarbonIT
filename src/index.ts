@@ -16,47 +16,43 @@ const nTurns = inputFileObject.adventurers.reduce((acc, curr) => {
 	return acc < curr.moves.length ? curr.moves.length : acc;
 }, 0);
 
-console.log(inputFileObject);
+console.log("Input Object:", inputFileObject);
 
 export function playMap(): void {
 	for (let i = 0; i < nTurns; i++) {
 		let nextCase: Coords;
 		for (let adventurer of adventurers) {
+			console.log("Adventurer:", adventurer);
 			if (adventurer.moves.length > 0) {
 				switch (adventurer.moves[0]) {
 					case "A":
 						switch (adventurer.direction) {
 							case "N":
-								nextCase = new Coords(adventurer.x, adventurer.y + 1);
+								nextCase = new Coords(adventurer.x, adventurer.y - 1);
 								if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
-									adventurers[adventurers.indexOf(adventurer)].y++;
-									adventurer.y++;
+									adventurer.y--;
 								}
 								break;
 							case "S":
-								nextCase = new Coords(adventurer.x, adventurer.y - 1);
+								nextCase = new Coords(adventurer.x, adventurer.y + 1);
 								if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
-									adventurers[adventurers.indexOf(adventurer)].y--;
-									adventurer.y--;
+									adventurer.y++;
 								}
 								break;
 							case "W":
 								nextCase = new Coords(adventurer.x - 1, adventurer.y);
 								if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
-									adventurers[adventurers.indexOf(adventurer)].x--;
 									adventurer.x--;
 								}
 								break;
 							case "E":
 								nextCase = new Coords(adventurer.x + 1, adventurer.y);
 								if (isLegalMovement(nextCase, mapCoords, mountains, adventurers)) {
-									adventurers[adventurers.indexOf(adventurer)].x++;
 									adventurer.x++;
 								}
 								break;
 						}
 						// Check for treasures
-						// Should already have an output different from the input
 						break;
 					case "D":
 						adventurer.direction =
@@ -68,6 +64,7 @@ export function playMap(): void {
 							directions[(directions.indexOf(adventurer.direction) + 3) % 4];
 						break;
 				}
+				adventurers[adventurers.indexOf(adventurer)].moves = adventurer.moves.slice(1);
 			}
 		}
 	}

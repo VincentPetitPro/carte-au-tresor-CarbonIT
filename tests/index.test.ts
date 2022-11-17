@@ -14,7 +14,7 @@ describe("playMap", () => {
 			[new Treasure(0, 3, 2), new Treasure(1, 3, 3)],
 			[new Adventurer("Lara", 0, 1, "S", "AADADAGGA", 0)]
 		);
-        
+
 		const mapCoords = inputFileObject.map;
 		const mountains = inputFileObject.mountains;
 		const treasures = inputFileObject.treasures;
@@ -30,6 +30,6 @@ describe("playMap", () => {
 			[new Adventurer("Lara", 1, 3, "S", "", 3)]
 		);
 
-		expect(playMap()).toEqual(expectedOuputObject);
+		expect(playMap()).toEqual(JSON.stringify(expectedOuputObject));
 	});
 });
