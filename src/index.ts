@@ -1,11 +1,11 @@
 import Coords from "./coords";
-import { readEntryFile, parseEntryFile } from "./file_helpers";
+import { readInputFile, parseInputFile, writeOutputFile } from "./file_helpers";
 import { isLegalMovement } from "./movement_helpers";
 
 const directions = ["N", "E", "S", "W"];
 
-const entryFile = readEntryFile("./entry.txt");
-const fileObject = parseEntryFile(entryFile);
+const inputFile = readInputFile("./input.txt");
+const fileObject = parseInputFile(inputFile);
 
 const mapCoords = fileObject.map;
 const mountains = fileObject.mountains;
@@ -65,3 +65,5 @@ for (let i = 0; i < nTurns; i++) {
 		}
 	}
 }
+
+writeOutputFile("./output.txt", fileObject);
